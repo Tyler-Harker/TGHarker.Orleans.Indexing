@@ -29,7 +29,7 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
             {
                 Fields = _fieldBuilder.Build(typeof(T))
             };
-            indexClient.CreateOrUpdateIndex(index);
+            var response = indexClient.CreateOrUpdateIndex(index);
             return Task.CompletedTask;
         }
 
