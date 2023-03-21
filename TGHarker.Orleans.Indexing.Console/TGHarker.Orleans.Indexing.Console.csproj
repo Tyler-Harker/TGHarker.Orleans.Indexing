@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator\TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing.AzureCognitiveSearch\TGHarker.Orleans.Indexing.AzureCognitiveSearch.csproj" />
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing\TGHarker.Orleans.Indexing.csproj" />
+  </ItemGroup>
+
+</Project>
