@@ -1,0 +1,101 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+
+
+pool:
+  vmImage: ubuntu-latest
+
+name: '$(version.MajorMinor).$(version.Patch)'
+
+variables:
+  version.MajorMinor: '1.0'
+  version.Patch: $[counter(variables['version.MajorMinor'], 0)]
+  versionNumber: '$(version.MajorMinor).$(version.Patch)'
+  projects: '**/*.csproj'
+  nugetFeed: 'ac6f8a1e-1c0c-46e0-8c06-d9ef9895e954'
+  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: Cache@2
+  displayName: Cache
+  inputs:
+    key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
+    restoreKeys: |
+       nuget | "$(Agent.OS)"
+       nuget
+    path: '$(NUGET_PACKAGES)'
+    cacheHitVar: 'CACHE_RESTORED'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  condition: ne(variables.CACHE_RESTORED, true)
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'ac6f8a1e-1c0c-46e0-8c06-d9ef9895e954'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(projects)'
+    includesource: true
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'versionNumber'
+    arguments: '--no-restore'
+
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: 'test'
+#    projects: '$(projects)'
+#    arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" --no-restore'
+
+#- script: 'dotnet tool install -g dotnet-reportgenerator-globaltool'
+#  displayName: 'Install ReportGenerator'
+
+#- script: 'reportgenerator -reports:$(agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(build.sourcesdirectory) -reporttypes:"Cobertura"'
+#  displayName: 'Run ReportGenerator'
+
+#- task: PublishCodeCoverageResults@1
+#  displayName: 'publish code coverage'
+#  inputs:
+#    codeCoverageTool: Cobertura
+#    summaryFileLocation: '$(build.sourcesdirectory)/Cobertura.xml'
+
+- task: DotNetCoreCLI@2
+  displayName: 'publish TGHarker.Orleans.Indexing'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/TGHarker.Orleans.Indexing.$(versionNumber).nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: $(nugetFeed)
+- task: DotNetCoreCLI@2
+  displayName: 'publish TGHarker.Orleans.Indexing.Core'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/TGHarker.Orleans.Indexing.Core.$(versionNumber).nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: $(nugetFeed)
+- task: DotNetCoreCLI@2
+  displayName: 'publish TGHarker.Orleans.Indexing.AzureCognitiveSearch'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/TGHarker.Orleans.Indexing.AzureCognitiveSearch.$(versionNumber).nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: $(nugetFeed)
+- task: DotNetCoreCLI@2
+  displayName: 'publish TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator.$(versionNumber).nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: $(nugetFeed)
