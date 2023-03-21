@@ -108,7 +108,7 @@ public class IndexableStateGenerator : ISourceGenerator
         }
 
         sb.AppendLine($@"
-        public void Map({classSymbol.Name} obj)
+        public override void Map({classSymbol.Name} obj)
         {{");
 
         foreach (var member in originalClass.Members)
