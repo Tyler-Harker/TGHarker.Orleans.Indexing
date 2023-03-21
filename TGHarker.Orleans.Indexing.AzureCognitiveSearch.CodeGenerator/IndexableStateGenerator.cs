@@ -66,7 +66,7 @@ public class IndexableStateGenerator : ISourceGenerator
 
         var sb = new StringBuilder();
         sb.AppendLine("using Azure.Search.Documents.Indexes;");
-        sb.AppendLine("using TGHarker.Orleans.Indexing.Core");
+        sb.AppendLine("using TGHarker.Orleans.Indexing.Core;");
         sb.AppendLine($"namespace {namespaceName}");
         sb.AppendLine("{");
         sb.AppendLine($"    public class {newClassName} : BaseIndexState<{classSymbol.Name}>");
