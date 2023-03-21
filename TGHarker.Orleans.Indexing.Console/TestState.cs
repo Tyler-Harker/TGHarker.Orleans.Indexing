@@ -8,8 +8,9 @@ using TGHarker.Orleans.Indexing.Core;
 namespace TGHarker.Orleans.Indexing.Console
 {
     [IndexableState]
-    public class TestState : IIndexableState<TestValueObject, string>
+    public class TestState
     {
+        [IndexableProperty(IsId = true)]
         public TestValueObject Id { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
