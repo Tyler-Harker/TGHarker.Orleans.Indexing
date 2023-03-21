@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <LangVersion>11.0</LangVersion>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <NoPackageAnalysis>true</NoPackageAnalysis>
+	  <IncludeBuildOutput>false</IncludeBuildOutput>
+	  <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TGHarker.Orleans.Indexing.Core\TGHarker.Orleans.Indexing.Core.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
 
 </Project>
