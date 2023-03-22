@@ -7,7 +7,7 @@ using TGHarker.Orleans.Indexing.Core;
 
 namespace TGHarker.Orleans.Indexing.Console
 {
-    public record TestValueObject(string Value) : IValueObject<string>
+    public record TestValueObject(Guid Value) : IValueObject<Guid>
     {
     }
 }

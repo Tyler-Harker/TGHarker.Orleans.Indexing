@@ -90,6 +90,10 @@ public class IndexableStateGenerator : ISourceGenerator
                         ? typeArgSymbol.ToDisplayString()
                         : propertySymbol.Type.ToDisplayString();
 
+                    propertyType = propertyType == "System.Guid"
+                        ? "string"
+                        : propertyType;
+
                     // Generate the property decorated with 'SearchableAttribute'
                     sb.AppendLine(
                         $"        [SearchableField(IsFilterable = {GetBooleanValue("IsFilterable")}, IsSortable = {GetBooleanValue("IsSortable")}, IsKey = {GetBooleanValue("IsId")}, IsFacetable = {GetBooleanValue("IsFacetable")}, IsHidden = {GetBooleanValue("IsHidden")})]");
@@ -132,11 +136,26 @@ public class IndexableStateGenerator : ISourceGenerator
                     // Generate the property decorated with 'SearchableAttribute'
                     if (typeArgSymbol != null)
                     {
-                        sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value;");
+                        if (propertyType == "System.Guid")
+                        {
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value.ToString();");
+                        }
+                        else
+                        {
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value;");
+                        }
                     }
                     else
                     {
-                        sb.AppendLine($@"           {propertyName} = obj.{propertyName};");
+                        if (propertyType == "System.Guid")
+                        {
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.ToString();");
+                        }
+                        else
+                        {
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName};");
+                        }
+                        
                     }
                 }
             }
