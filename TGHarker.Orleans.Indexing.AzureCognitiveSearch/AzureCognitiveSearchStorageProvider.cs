@@ -21,25 +21,27 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
             _options = options;
         }
 
-        public Task CreateIndexAsync<T>()
+        public Task CreateIndexAsync(Type type)
         {
             var adminCredentials = new AzureKeyCredential(_options.ApiKey);
             var indexClient = new SearchIndexClient(_options.Uri, adminCredentials);
-            var index = new SearchIndex(GetIndexName<T>())
+            var index = new SearchIndex(GetIndexName(type))
             {
-                Fields = _fieldBuilder.Build(typeof(T))
+                Fields = _fieldBuilder.Build(type)
             };
             var response = indexClient.CreateOrUpdateIndex(index);
             return Task.CompletedTask;
         }
 
-        public Task UploadAsync<T>(T item)
+        public Task CreateIndexAsync<T>() => CreateIndexAsync(typeof(T));
+
+        public Task UploadAsync(Type type, object o)
         {
-            _searchClient = _searchClient ?? new SearchClient(_options.Uri, GetIndexName<T>(), new AzureKeyCredential(_options.ApiKey));
-            _searchClient.UploadDocuments(new T[] { item });
+            _searchClient = _searchClient ?? new SearchClient(_options.Uri, GetIndexName(type), new AzureKeyCredential(_options.ApiKey));
+            _searchClient.UploadDocuments(new [] { o });
             return Task.CompletedTask;
         }
 
-        private string GetIndexName<T>() => typeof(T).Name.ToLower();
+        private string GetIndexName(Type type) => type.Name.ToLower();
     }
 }

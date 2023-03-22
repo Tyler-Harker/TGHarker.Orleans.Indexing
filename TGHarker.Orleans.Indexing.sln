@@ -5,13 +5,13 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGHarker.Orleans.Indexing", "TGHarker.Orleans.Indexing\TGHarker.Orleans.Indexing.csproj", "{0B2C397A-2E47-41D5-90C0-6B369AFAD566}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGHarker.Orleans.Indexing.Console", "TGHarker.Orleans.Indexing.Console\TGHarker.Orleans.Indexing.Console.csproj", "{BA8C063C-89DF-49CB-8024-85FB94ED1D4D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGHarker.Orleans.Indexing.AzureCognitiveSearch", "TGHarker.Orleans.Indexing.AzureCognitiveSearch\TGHarker.Orleans.Indexing.AzureCognitiveSearch.csproj", "{9A3FE230-DC88-40B2-BA13-54294E2757E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator", "TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator\TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator.csproj", "{63FDECA7-BA7C-4F37-8B13-832E71D3A7FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGHarker.Orleans.Indexing.Core", "TGHarker.Orleans.Indexing.Core\TGHarker.Orleans.Indexing.Core.csproj", "{C7467418-7AA6-4252-B82D-F113F9F4CC45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TGHarker.Orleans.Indexing.Core", "TGHarker.Orleans.Indexing.Core\TGHarker.Orleans.Indexing.Core.csproj", "{C7467418-7AA6-4252-B82D-F113F9F4CC45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGHarker.Orleans.Indexing.SiloSample", "TGHarker.Orleans.Indexing.SiloSample\TGHarker.Orleans.Indexing.SiloSample.csproj", "{11E92EEC-11F2-4459-A963-908C297D842A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{0B2C397A-2E47-41D5-90C0-6B369AFAD566}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B2C397A-2E47-41D5-90C0-6B369AFAD566}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B2C397A-2E47-41D5-90C0-6B369AFAD566}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA8C063C-89DF-49CB-8024-85FB94ED1D4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA8C063C-89DF-49CB-8024-85FB94ED1D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA8C063C-89DF-49CB-8024-85FB94ED1D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA8C063C-89DF-49CB-8024-85FB94ED1D4D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A3FE230-DC88-40B2-BA13-54294E2757E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A3FE230-DC88-40B2-BA13-54294E2757E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A3FE230-DC88-40B2-BA13-54294E2757E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{C7467418-7AA6-4252-B82D-F113F9F4CC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7467418-7AA6-4252-B82D-F113F9F4CC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7467418-7AA6-4252-B82D-F113F9F4CC45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E92EEC-11F2-4459-A963-908C297D842A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E92EEC-11F2-4459-A963-908C297D842A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E92EEC-11F2-4459-A963-908C297D842A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E92EEC-11F2-4459-A963-908C297D842A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

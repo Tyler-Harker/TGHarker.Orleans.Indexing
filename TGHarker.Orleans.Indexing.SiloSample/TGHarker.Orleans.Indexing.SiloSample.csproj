@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Orleans.Persistence.Memory" Version="7.1.0" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="7.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator\TGHarker.Orleans.Indexing.AzureCognitiveSearch.CodeGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing.AzureCognitiveSearch\TGHarker.Orleans.Indexing.AzureCognitiveSearch.csproj" />
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing.Core\TGHarker.Orleans.Indexing.Core.csproj" />
+    <ProjectReference Include="..\TGHarker.Orleans.Indexing\TGHarker.Orleans.Indexing.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -67,10 +67,16 @@ public class IndexableStateGenerator : ISourceGenerator
         var sb = new StringBuilder();
         sb.AppendLine("using Azure.Search.Documents.Indexes;");
         sb.AppendLine("using TGHarker.Orleans.Indexing.Core;");
+        sb.AppendLine("using System.Text.Json;");
+        sb.AppendLine("using System.Text.Json.Serialization;");
         sb.AppendLine($"namespace {namespaceName}");
         sb.AppendLine("{");
+        sb.AppendLine($"    [GeneratedIndexClass]");
         sb.AppendLine($"    public class {newClassName} : BaseIndexState<{classSymbol.Name}>");
         sb.AppendLine("    {");
+        //sb.AppendLine($"        [FieldBuilderIgnore]");
+        //sb.AppendLine($"        [JsonIgnore]");
+        //sb.AppendLine($"        public override Type Type => typeof({newClassName});");
 
         foreach (var member in originalClass.Members)
         {
