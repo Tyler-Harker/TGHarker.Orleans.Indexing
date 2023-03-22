@@ -38,7 +38,7 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
 
         public Task CreateIndexAsync()
         {
-            return _storageProvider.CreateIndexAsync<T>();
+            return _storageProvider.CreateIndexAsync<TIndex>();
         }
 
         protected override Task WriteStateAsync()
