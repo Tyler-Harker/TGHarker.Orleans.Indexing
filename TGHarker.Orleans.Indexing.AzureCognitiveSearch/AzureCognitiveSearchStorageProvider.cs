@@ -13,7 +13,7 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
 {
     public sealed class AzureCognitiveSearchStorageProvider : IIndexStorageProvider
     {
-        private readonly SearchClient _searchClient;
+        private SearchClient _searchClient;
         private readonly FieldBuilder _fieldBuilder = new FieldBuilder();
         private readonly AzureSearchOptions _options;
         public AzureCognitiveSearchStorageProvider(AzureSearchOptions options)
@@ -35,6 +35,8 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
 
         public Task UploadAsync<T>(T item)
         {
+            _searchClient = _searchClient ?? new SearchClient(_options.Uri, GetIndexName<T>(), new AzureKeyCredential(_options.ApiKey));
+            _searchClient.UploadDocuments(new T[] { item });
             return Task.CompletedTask;
         }
 
