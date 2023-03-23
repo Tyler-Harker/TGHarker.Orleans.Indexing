@@ -144,11 +144,11 @@ public class IndexableStateGenerator : ISourceGenerator
                     {
                         if (propertyType == "System.Guid")
                         {
-                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value?.ToString();");
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value.ToString();");
                         }
                         else
                         {
-                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value;");
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}?.Value;");
                         }
                     }
                     else
