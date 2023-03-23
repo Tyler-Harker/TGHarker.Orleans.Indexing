@@ -144,7 +144,7 @@ public class IndexableStateGenerator : ISourceGenerator
                     {
                         if (propertyType == "System.Guid")
                         {
-                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value.ToString();");
+                            sb.AppendLine($@"           {propertyName} = obj.{propertyName}.Value?.ToString();");
                         }
                         else
                         {
