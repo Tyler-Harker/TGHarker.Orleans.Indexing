@@ -102,7 +102,7 @@ public class IndexableStateGenerator : ISourceGenerator
 
                     // Generate the property decorated with 'SearchableAttribute'
                     sb.AppendLine(
-                        $"        [SearchableField(IsFilterable = {GetBooleanValue("IsFilterable")}, IsSortable = {GetBooleanValue("IsSortable")}, IsKey = {GetBooleanValue("IsId")}, IsFacetable = {GetBooleanValue("IsFacetable")}, IsHidden = {GetBooleanValue("IsHidden")})]");
+                        $"        [SimpleField(IsFilterable = {GetBooleanValue("IsFilterable")}, IsSortable = {GetBooleanValue("IsSortable")}, IsKey = {GetBooleanValue("IsId")}, IsFacetable = {GetBooleanValue("IsFacetable")}, IsHidden = {GetBooleanValue("IsHidden")})]");
                     sb.AppendLine($"        public {propertyType} {propertyName} {{ get; set; }}");
 
                     string GetBooleanValue(string propertyName)
