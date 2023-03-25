@@ -9,5 +9,6 @@ namespace TGHarker.Orleans.Indexing.Core
     [AttributeUsage(AttributeTargets.Class)]
     public class IndexableStateAttribute : Attribute
     {
+        public string Name { get; set; }
     }
 }

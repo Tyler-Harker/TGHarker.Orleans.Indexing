@@ -21,11 +21,11 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
             _options = options;
         }
 
-        public Task CreateIndexAsync(Type type)
+        public Task CreateIndexAsync(string indexName, Type type)
         {
             var adminCredentials = new AzureKeyCredential(_options.ApiKey);
             var indexClient = new SearchIndexClient(_options.Uri, adminCredentials);
-            var index = new SearchIndex(GetIndexName(type))
+            var index = new SearchIndex(indexName)
             {
                 Fields = _fieldBuilder.Build(type)
             };
@@ -33,15 +33,12 @@ namespace TGHarker.Orleans.Indexing.AzureCognitiveSearch
             return Task.CompletedTask;
         }
 
-        public Task CreateIndexAsync<T>() => CreateIndexAsync(typeof(T));
-
-        public Task UploadAsync(Type type, object o)
+        public Task UploadAsync(string indexName, object o)
         {
-            _searchClient = _searchClient ?? new SearchClient(_options.Uri, GetIndexName(type), new AzureKeyCredential(_options.ApiKey));
+            _searchClient = _searchClient ?? new SearchClient(_options.Uri, indexName, new AzureKeyCredential(_options.ApiKey));
             _searchClient.UploadDocuments(new [] { o });
             return Task.CompletedTask;
         }
 
-        private string GetIndexName(Type type) => type.Name.ToLower();
     }
 }

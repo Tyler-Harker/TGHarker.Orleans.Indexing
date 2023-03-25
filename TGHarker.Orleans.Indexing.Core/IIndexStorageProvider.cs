@@ -6,8 +6,7 @@ namespace TGHarker.Orleans.Indexing.Core
 {
     public interface IIndexStorageProvider
     {
-        Task CreateIndexAsync<T>();
-        Task CreateIndexAsync(Type type);
-        Task UploadAsync(Type type, object item);
+        Task CreateIndexAsync(string indexName, Type type);
+        Task UploadAsync(string indexName, object item);
     }
 }

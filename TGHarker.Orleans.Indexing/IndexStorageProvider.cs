@@ -21,7 +21,7 @@ namespace TGHarker.Orleans.Indexing
         private readonly IndexStorageOptions _options;
         private Dictionary<Type, Type?> GrainStateTypeToGeneratedStateType { get; set; } = new();
         private Dictionary<Type, IBaseIndexState> GeneratedStateTypeToInstance { get; set; } = new();
-        private HashSet<Type> GeneratedIndexHash { get; set; } = new();
+        private Dictionary<Type, string> IndexNames { get; set; } = new();
         public IndexStorageProvider(IServiceProvider services, string name, IndexStorageOptions options)
         {
             _options = options;
@@ -49,15 +49,28 @@ namespace TGHarker.Orleans.Indexing
             foreach (var assembly in options.GrainStateAssemblies)
             {
                 var types = assembly.GetTypes();
+                foreach (var type in types) //this for loop and loop below it have to be separate. Have to make sure index names are created.
+                {
+                    if (type.IsDefined(typeof(IndexableStateAttribute), false))
+                    {
+                        var attribute = (IndexableStateAttribute)type.GetCustomAttributes(typeof(IndexableStateAttribute)).First();
+                        var indexName = attribute.Name ?? type.Name;
+
+                        IndexNames.Add(type, indexName.ToLower());
+                    }
+                }
                 foreach (var type in types)
                 {
+                    
                     if (type.IsDefined(typeof(GeneratedIndexClassAttribute), false))
                     {
                         var originalStateType = type.BaseType.GetGenericArguments()[0];
                         GrainStateTypeToGeneratedStateType.Add(originalStateType, type);
                         GeneratedStateTypeToInstance.Add(type, (IBaseIndexState)Activator.CreateInstance(type));
-                        _indexStorageProvider.CreateIndexAsync(type).ConfigureAwait(false).GetAwaiter().GetResult();
+                        _indexStorageProvider.CreateIndexAsync(IndexNames[originalStateType], type).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
+
+                    
                 }
             }
         }
@@ -90,11 +103,11 @@ namespace TGHarker.Orleans.Indexing
 
                 if (_options.AwaitIndexSave)
                 {
-                    await _indexStorageProvider.UploadAsync(generatedGrainStateType, generatedObj);
+                    await _indexStorageProvider.UploadAsync(IndexNames[grainStateType], generatedObj);
                 }
                 else
                 {
-                    _indexStorageProvider.UploadAsync(generatedGrainStateType, generatedObj);
+                    _indexStorageProvider.UploadAsync(IndexNames[grainStateType], generatedObj);
                 }
             }
             
